@@ -1,4 +1,5 @@
 from astropy.io import fits
+import numpy as np
 
 def objective_function(p, x, y, degree):
     num_coefficients = (degree + 1) * (degree + 2) // 2
@@ -18,11 +19,10 @@ def read_shopt(shoptFile):
     return polyMatrix, degree
 
 def p(u,v, polMatrix, degree):
-    psf = zeros((polMatrix.shape[0], polMatrix.shape[1]))
-    for i in range(len(polMatrix.shape[0])):
-        for j in range(len(polMatrix.shape[1])):
+    degree = int(degree)
+    psf = np.zeros((polMatrix.shape[0], polMatrix.shape[1]))
+    for i in range(polMatrix.shape[0]):
+        for j in range(polMatrix.shape[1]):
             psf[i,j] = objective_function(polMatrix[i,j,:], u, v, degree)
     return psf
-            
-
 
