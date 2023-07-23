@@ -15,7 +15,7 @@ def objective_function(p, x, y, degree):
 def read_shopt(shoptFile):
     f = fits.open(shoptFile)
     polyMatrix = f[0].data
-    degree = f[1].data['polynomial degree'][0]
+    degree = f[1].data['POLYNOMIAL_DEGREE'][0]
     return polyMatrix, degree
 
 def p(u,v, polMatrix, degree):
@@ -24,5 +24,5 @@ def p(u,v, polMatrix, degree):
     for i in range(polMatrix.shape[0]):
         for j in range(polMatrix.shape[1]):
             psf[i,j] = objective_function(polMatrix[i,j,:], u, v, degree)
-    return psf
+    return psf/np.sum(psf)
 
